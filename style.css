@@ -79,3 +79,32 @@ hr {
   color: #fff;
   font-size: 13px;
 }
+
+.github-card {
+  max-width: 100%;
+  display: block;
+  margin: 8px auto;
+}
+
+.github-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.github-profile {
+  text-align: center;
+  font-weight: bold;
+  color: #000080;
+  text-decoration: none;
+}
+
+.github-avatar {
+  display: block;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #000080;
+}

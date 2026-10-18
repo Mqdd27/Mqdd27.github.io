@@ -1,7 +1,8 @@
 module Main exposing (main)
 
-import Html exposing (Html, a, div, h1, h2, h3, hr, li, p, section, text, ul)
-import Html.Attributes exposing (class, href, target)
+import Browser
+import Html exposing (Html, a, div, h1, h2, h3, hr, img, li, p, section, text, ul)
+import Html.Attributes exposing (alt, class, href, src, target)
 
 
 
@@ -81,15 +82,26 @@ projects =
 -- VIEW
 
 
-main : Html msg
+main : Program Int Int Never
 main =
+    Browser.element
+        { init = \year -> ( year, Cmd.none )
+        , update = \_ year -> ( year, Cmd.none )
+        , view = view
+        , subscriptions = \_ -> Sub.none
+        }
+
+
+view : Int -> Html msg
+view year =
     div [ class "page" ]
         [ h1 [] [ text "~*~ Ahmad Miqdad ~*~" ]
         , Html.node "marquee" [] [ text "Welcome to my homepage! Odoo Developer and IT professional." ]
         , viewWindow "Work Experiences" (List.map viewExp experiences)
         , viewWindow "Projects" (List.map viewProj projects)
+        , viewWindow "GitHub Stats" viewGithubStats
         , hr [] []
-        , p [ class "footer" ] [ text "© Mqdd" ]
+        , p [ class "footer" ] [ text ("© " ++ String.fromInt year ++ " Mqdd") ]
         ]
 
 
@@ -125,3 +137,36 @@ viewProj proj =
           else
             text ""
         ]
+
+
+githubUser : String
+githubUser =
+    "Mqdd27"
+
+
+githubTheme : String
+githubTheme =
+    "&bg_color=c0c0c0&title_color=000080&text_color=000000&icon_color=000080&hide_border=true"
+
+
+viewGithubStats : List (Html msg)
+viewGithubStats =
+    [ div [ class "github-top" ]
+        [ a [ class "github-profile", href ("https://github.com/" ++ githubUser), target "_blank" ]
+            [ img [ src ("https://github.com/" ++ githubUser ++ ".png"), alt "GitHub avatar", class "github-avatar" ] []
+            , p [] [ text ("@" ++ githubUser) ]
+            ]
+        , img
+            [ src ("https://github-readme-stats.vercel.app/api?username=" ++ githubUser ++ "&show_icons=true" ++ githubTheme)
+            , alt "GitHub stats"
+            , class "github-card"
+            ]
+            []
+        ]
+    , img
+        [ src ("https://ghchart.rshah.org/" ++ githubUser)
+        , alt "GitHub contributions"
+        , class "github-card"
+        ]
+        []
+    ]
