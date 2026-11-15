@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: npx --yes elm@0.19.2-0 make src/Main.elm --optimize --output=main.js
-      - run: mkdir dist && cp index.html style.css main.js dist/
+      - run: mkdir dist && cp index.html style.css main.js og-image.png dist/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
